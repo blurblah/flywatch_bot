@@ -54,8 +54,9 @@ class DBHandler:
 		cursor.execute('SELECT * FROM keywords;')
 		return cursor.fetchall()
 
-	def selectArticles(self, searchTime):
+	def selectArticles(self):
 		cursor = self.connection.cursor()
 		cursor.execute('SET NAMES utf8;')
-		cursor.execute("SELECT * FROM articles WHERE created_at >= '%s'" % searchTime)
+		cursor.execute("SELECT * FROM articles WHERE used = false FOR UPDATE; \
+						UPDATE articles SET used = true; COMMIT;")
 		return cursor.fetchall()

@@ -35,13 +35,12 @@ def sendResults(keywords, articles):
 def main():
 	#bot.notifyOnMessage(handle)
 	print "Flywatch bot started..."
-	now = datetime.now()
 	while 1:
-		time.sleep(10)
+		time.sleep(60)
 		# check crawling data
-		checkTime = datetime.strftime(now, '%Y-%m-%d %H:%M:%S')
-		print "Select crawling data", checkTime
-		articles = dbHandler.selectArticles(checkTime)
+		checkTime = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+		print "Select crawling data at", checkTime
+		articles = dbHandler.selectArticles()
 		print "Selected crawling data:", articles
 		now = datetime.now() # update checked time
 
