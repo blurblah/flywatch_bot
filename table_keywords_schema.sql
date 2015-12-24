@@ -1,0 +1,14 @@
+CREATE DATABASE IF NOT EXISTS flywatch;
+USE flywatch;
+
+DROP TABLE IF EXISTS keywords;
+CREATE TABLE keywords
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	uid INT NOT NULL,
+	keyword VARCHAR(255) NOT NULL,
+	created_at DATETIME NOT NULL,
+    
+    CONSTRAINT keywords_pk PRIMARY KEY(id),
+    CONSTRAINT keywords_unique UNIQUE(id)
+) ENGINE = INNODB DEFAULT CHARSET = UTF8;
