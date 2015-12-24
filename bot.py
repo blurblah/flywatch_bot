@@ -36,7 +36,6 @@ def main():
 	#bot.notifyOnMessage(handle)
 	print "Flywatch bot started..."
 	while 1:
-		time.sleep(60)
 		# check crawling data
 		checkTime = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
 		print "Select crawling data at", checkTime
@@ -46,6 +45,7 @@ def main():
 
 		keywords = dbHandler.selectAllKeywords()
 		sendResults(keywords, articles)
+		time.sleep(60)
 
 def showHelp(chatId):
 	USAGE = u"""[사용법] 아래 명령어대로 입력하세요.
