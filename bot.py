@@ -4,6 +4,10 @@ import logging
 import time
 from datetime import datetime
 from dbhandler import DBHandler
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 CMD_START = "/start"
 CMD_REG = "/reg"
@@ -25,15 +29,17 @@ def searchArticles(keyword, articles):
 
 def sendResults(keywords, articles):
 	for keywordRow in keywords:
-		results = searchArticles(keywordRow['keyword'].encode('utf-8'), articles)
-		print "Seached articles:", results
+		keyword = keywordRow['keyword'].encode('utf-8')
+		results = searchArticles(keyword, articles)
+		print "Keyword:", keyword, "Seached articles:", results
 		for item in results:
-			uid = keywordRow['uid'].encode('utf-8')
+			uid = keywordRow['uid']
 			print "Send message to", uid
+			print item
 			bot.sendMessage(uid, item)
 
 def main():
-	#bot.notifyOnMessage(handle)
+	bot.notifyOnMessage(handle)
 	print "Flywatch bot started..."
 	while 1:
 		# check crawling data
@@ -54,7 +60,9 @@ def showHelp(chatId):
 	/list - (등록된 keyword)
 	/help - (도움말 보여주기)
 	"""
-	bot.sendMessage(chatId, USAGE)
+	showKeyboard = {'keyboard': ['/reg', '/unreg', '/list', '/list']}
+	bot.sendMessage(chatId, USAGE, reply_markup = showKeyboard)
+
 
 def registerKeyword(chatId, keyword):
 	if dbHandler.insertKeyword(chatId, keyword):
